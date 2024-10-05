@@ -2,7 +2,7 @@ import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-interface ResultProps {
+type ResultProps = {
   score: number;
 }
 

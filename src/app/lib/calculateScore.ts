@@ -1,4 +1,4 @@
-import { Response } from '@/app/test/page';
+import { Response } from "../test/TestCliente"; 
 
 export default function calculateScore(responses: Response[]): number {
   const totalPoints = responses.reduce((acc, curr) => acc + curr.points, 0);
