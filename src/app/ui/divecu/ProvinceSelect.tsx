@@ -1,23 +1,22 @@
-// src/app/components/ProvinceSelect.tsx
+import React, { useState, useEffect } from 'react';
 
-'use client';
+interface ProvinceSelectProps {
+  onProvinceChange: (provinceId: string) => void;
+}
 
-import React, { useEffect, useState } from 'react';
-
-const ProvinceSelect = () => {
+const ProvinceSelect: React.FC<ProvinceSelectProps> = ({ onProvinceChange }) => {
   const [provinces, setProvinces] = useState([]);
 
   useEffect(() => {
-    const fetchProvinces = async () => {
-      const res = await fetch('http://localhost:3000/provinces');
-      if (res.ok) {
-        const data = await res.json();
-        setProvinces(data);
-      }
-    };
-
-    fetchProvinces();
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/provinces`)
+      .then((response) => response.json())
+      .then((data) => setProvinces(data))
+      .catch((error) => console.error('Error al cargar provincias:', error));
   }, []);
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onProvinceChange(event.target.value);
+  };
 
   return (
     <div>
@@ -27,13 +26,12 @@ const ProvinceSelect = () => {
       <select
         id="province"
         name="province"
-        className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        onChange={handleChange}
+        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md"
       >
-        <option value="" className="text-gray-400">
-          Selecciona una opción
-        </option>
-        {provinces.map((province: { id_prov: string; province_name: string }) => (
-          <option key={province.id_prov} value={province.id_prov} className="text-black">
+        <option value="">Seleccione una provincia</option>
+        {provinces.map((province: { province_id: string; province_name: string }) => (
+          <option key={province.province_id} value={province.province_id}>
             {province.province_name}
           </option>
         ))}
