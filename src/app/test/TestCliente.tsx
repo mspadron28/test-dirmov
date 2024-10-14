@@ -1,7 +1,8 @@
-// app/test/TestClient.tsx
 'use client';
 import { useState } from 'react';
 import Question from '../ui/test/Question'; 
+import { useSearchParams } from 'next/navigation';
+import Footer from '../ui/structure/Footer';
 import Result from '../ui/test/Result'; 
 import calculateScore from '../lib/calculateScore'; 
 import { Question as QuestionType, Option } from '../lib/definitions';
@@ -19,6 +20,12 @@ export default function TestClient({ allQuestions }: TestClientProps) {
   const [currentQuestion, setCurrentQuestion] = useState<QuestionType & { options: Option[] }>(allQuestions[0]);
   const [responses, setResponses] = useState<Response[]>([]);
   const [score, setScore] = useState<number | null>(null);
+
+  const searchParams = useSearchParams();
+  const name = searchParams.get('name') || 'No ingresado';
+  const province = searchParams.get('province') || 'No seleccionada';
+  const canton = searchParams.get('canton') || 'No seleccionado';
+  const parish = searchParams.get('parish') || 'No seleccionada';
 
   const handleAnswer = (answer: string, points: number, nextQuestionId: number | null) => {
     const newResponses = [...responses, { answer, points }];
@@ -59,6 +66,8 @@ export default function TestClient({ allQuestions }: TestClientProps) {
           <Result score={score} />
         )}
       </div>
+          {/* Footer con los datos del formulario */}
+          <Footer name={name} province={province} canton={canton} parish={parish} />
     </div>
   );
 }

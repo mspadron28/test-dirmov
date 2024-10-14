@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 interface ProvinceSelectProps {
-  onProvinceChange: (provinceId: string) => void;
+  onProvinceChange: (provinceId: string, provinceName: string) => void;
 }
 
 const ProvinceSelect: React.FC<ProvinceSelectProps> = ({ onProvinceChange }) => {
@@ -15,7 +15,11 @@ const ProvinceSelect: React.FC<ProvinceSelectProps> = ({ onProvinceChange }) => 
   }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onProvinceChange(event.target.value);
+    const selectedOption = event.target.selectedOptions[0]; 
+    const provinceId = selectedOption.value; 
+    const provinceName = selectedOption.text; 
+
+    onProvinceChange(provinceId, provinceName); 
   };
 
   return (
@@ -31,7 +35,7 @@ const ProvinceSelect: React.FC<ProvinceSelectProps> = ({ onProvinceChange }) => 
       >
         <option value="">Seleccione una provincia</option>
         {provinces.map((province: { province_id: string; province_name: string }) => (
-          <option key={province.province_id} value={province.province_id}>
+          <option className='text-black' key={province.province_id} value={province.province_id}>
             {province.province_name}
           </option>
         ))}

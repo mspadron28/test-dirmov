@@ -12,7 +12,7 @@ export default function HomePage() {
           Por favor, responde con sinceridad.
         </p>
         <Link
-          href="/test"
+          href="/divisionecu"
           className="inline-flex items-center gap-4 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
         >
           <span>Iniciar test</span>

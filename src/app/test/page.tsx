@@ -1,4 +1,3 @@
-// app/test/page.tsx
 import TestClient from './TestCliente';
 import { fetchQuestions, fetchOptionsByQuestionId } from '../lib/data';
 

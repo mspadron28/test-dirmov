@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 interface CantonSelectProps {
-  provinceId: string;
-  onCantonChange: (cantonId: string) => void;
+  provinceId: string | null; 
+  onCantonChange: (cantonId: string, cantonName: string) => void;
 }
 
 const CantonSelect: React.FC<CantonSelectProps> = ({ provinceId, onCantonChange }) => {
@@ -18,7 +18,11 @@ const CantonSelect: React.FC<CantonSelectProps> = ({ provinceId, onCantonChange 
   }, [provinceId]);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onCantonChange(event.target.value);
+    const selectedOption = event.target.selectedOptions[0]; 
+    const cantonId = selectedOption.value; 
+    const cantonName = selectedOption.text; 
+
+    onCantonChange(cantonId, cantonName); 
   };
 
   return (
@@ -32,9 +36,9 @@ const CantonSelect: React.FC<CantonSelectProps> = ({ provinceId, onCantonChange 
         onChange={handleChange}
         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md"
       >
-        <option value="">Seleccione un cantón</option>
+        <option  value="">Seleccione un cantón</option>
         {cantons.map((canton: { canton_id: string; canton_name: string }) => (
-          <option key={canton.canton_id} value={canton.canton_id}>
+          <option className='text-black'  key={canton.canton_id} value={canton.canton_id}>
             {canton.canton_name}
           </option>
         ))}
